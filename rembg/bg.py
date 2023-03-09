@@ -13,6 +13,7 @@ from cv2 import (
 )
 from PIL import Image
 from PIL.Image import Image as PILImage
+
 # from pymatting.alpha.estimate_alpha_cf import estimate_alpha_cf
 # from pymatting.foreground.estimate_foreground_ml import estimate_foreground_ml
 # from pymatting.util.util import stack_images
@@ -116,7 +117,6 @@ def remove(
     only_mask: bool = False,
     post_process_mask: bool = False,
 ) -> Union[bytes, PILImage, np.ndarray]:
-
     if isinstance(data, PILImage):
         return_type = ReturnType.PILLOW
         img = data

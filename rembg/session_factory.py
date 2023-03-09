@@ -5,6 +5,7 @@ from typing import Type
 import onnxruntime as ort
 
 from .session_base import BaseSession
+
 # from .session_cloth import ClothSession
 from .session_simple import SimpleSession
 

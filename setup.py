@@ -3,7 +3,7 @@ import pathlib
 import sys
 
 sys.path.append(os.path.dirname(__file__))
-from setuptools import find_packages, setup
+from setuptools import setup
 
 import versioneer
 
@@ -16,7 +16,7 @@ setup(
     description="Remove image background",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/rnag/rembg",
+    url="https://github.com/rnag/rembg-aws-lambda",
     author="Daniel Gatis",
     author_email="danielgatis@gmail.com",
     classifiers=[
@@ -39,30 +39,11 @@ setup(
     include_package_data=True,
     python_requires=">3.7, <3.11",
     install_requires=[
-        # "aiohttp~=3.8.1",
-        # "asyncer~=0.0.2",
-        # "click~=8.1.3",
-        # "fastapi~=0.87.0",
-        # "filetype~=1.2.0",
-        # "pooch~=1.6.0",
-        # "imagehash~=4.3.1",
         "numpy~=1.23.5",
         "onnxruntime~=1.13.1",
         "opencv-python-headless~=4.6.0.66",
         "pillow~=9.3.0",
-        # "pymatting~=1.1.8",
-        # "python-multipart~=0.0.5",
-        # "scikit-image~=0.19.3",
-        # "scipy~=1.9.3",
-        # "tqdm~=4.64.1",
-        # "uvicorn~=0.20.0",
-        # "watchdog~=2.1.9",
     ],
-    # entry_points={
-    #     "console_scripts": [
-    #         "rembg=rembg.cli:main",
-    #     ],
-    # },
     extras_require={
         "gpu": ["onnxruntime-gpu~=1.13.1"],
     },
