@@ -1,8 +1,8 @@
 # Rembg (AWS Lambda)
 
-[![Downloads](https://pepy.tech/badge/rembg-aws-lambda)](https://pepy.tech/project/rembg)
-[![Downloads](https://pepy.tech/badge/rembg-aws-lambda/month)](https://pepy.tech/project/rembg)
-[![Downloads](https://pepy.tech/badge/rembg-aws-lambda/week)](https://pepy.tech/project/rembg)
+[![Downloads](https://pepy.tech/badge/rembg-aws-lambda)](https://pepy.tech/project/rembg-aws-lambda)
+[![Downloads](https://pepy.tech/badge/rembg-aws-lambda/month)](https://pepy.tech/project/rembg-aws-lambda)
+[![Downloads](https://pepy.tech/badge/rembg-aws-lambda/week)](https://pepy.tech/project/rembg-aws-lambda)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://img.shields.io/badge/License-MIT-blue.svg)
 [![Hugging Face Spaces](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-blue)](https://huggingface.co/spaces/KenjieDec/RemBG)
 [![Streamlit App](https://img.shields.io/badge/🎈%20Streamlit%20Community-Cloud-blue)](https://bgremoval.streamlit.app/)
@@ -14,30 +14,30 @@
 [`rembg-aws-lambda`](https://pypi.org/project/rembg-aws-lambda/) is a tool to remove images background.
 
 <p style="display: flex;align-items: center;justify-content: center;">
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-1.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-1.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-2.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-2.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-3.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/car-3.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-1.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-1.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-2.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-2.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-3.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/car-3.out.png" width="100" />
 </p>
 
 <p style="display: flex;align-items: center;justify-content: center;">
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-1.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-1.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-2.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-2.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-3.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/animal-3.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-1.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-1.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-2.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-2.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-3.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/animal-3.out.png" width="100" />
 </p>
 
 <p style="display: flex;align-items: center;justify-content: center;">
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-1.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-1.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-2.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-2.out.png" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-3.jpg" width="100" />
-  <img src="https://raw.githubusercontent.com/rnag/rembg/master/examples/girl-3.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-1.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-1.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-2.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-2.out.png" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-3.jpg" width="100" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-3.out.png" width="100" />
 </p>
 
 [//]: # (**If this project has helped you, please consider making a [donation]&#40;https://www.buymeacoffee.com/danielgatis&#41;.**)
@@ -63,7 +63,7 @@ First of all, you need to check if your system supports the `onnxruntime-gpu`.
 Go to https://onnxruntime.ai and check the installation matrix.
 
 <p style="display: flex;align-items: center;justify-content: center;">
-  <img src="https://raw.githubusercontent.com/danielgatis/rembg/master/onnxruntime-installation-matrix.png" width="400" />
+  <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/onnxruntime-installation-matrix.png" width="400" />
 </p>
 
 If yes, just run:
