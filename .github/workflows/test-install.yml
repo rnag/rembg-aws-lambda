@@ -11,8 +11,11 @@ jobs:
 
         steps:
             - uses: actions/checkout@v3
-              with:
-                  lfs: 'true'
+# disabling for now, because I easily hit bandwidth issues this way.
+# see also:
+#   https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-storage-and-bandwidth-usage
+#              with:
+#                  lfs: 'true'
             - name: Set up Python ${{ matrix.python-version }}
               uses: actions/setup-python@v4
               with:
@@ -23,6 +26,13 @@ jobs:
                   pip install .
                   pip install -r requirements-dev.txt
                   pip install pytest
+                  (echo "import pooch" ; \
+                   echo "url = 'https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx'"; \
+                   echo "md5 = '60024c5c889badc19c04ad937298a77b'"; \
+                   echo "fname = url.rsplit('/', 1)[1]"; \
+                   echo "pooch.retrieve(url, f'md5:{md5}', fname=fname, path='./rembg', progressbar=True)") \
+                  | python
+                  chmod 777 ./rembg/*.onnx
             - name: Test installation with pytest
               run: |
                   pytest
