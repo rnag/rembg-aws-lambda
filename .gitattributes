@@ -1,0 +1,2 @@
+rembg/_version.py export-subst
+*.onnx filter=lfs diff=lfs merge=lfs -text
