@@ -136,16 +136,6 @@ for file in Path('path/to/folder').glob('*.png'):
             o.write(output)
 ```
 
-## Usage as a docker
-
-Just replace the `rembg` command for `docker run danielgatis/rembg`.
-
-Try this:
-
-```
-docker run danielgatis/rembg i path/to/input.png path/to/output.png
-```
-
 ## Models
 
 All models are downloaded and saved in the user home folder in the `.u2net` directory.
