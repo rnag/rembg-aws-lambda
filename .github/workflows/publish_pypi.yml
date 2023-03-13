@@ -10,8 +10,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-              with:
-                  lfs: 'true'
+# TODO disabling `lfs` due to service rate limits (for now)
+#              with:
+#                  lfs: 'true'
             - uses: actions/setup-python@v2
               with:
                   python-version: 3.9
@@ -19,7 +20,14 @@ jobs:
             - name: "Installs dependencies"
               run: |
                   python3 -m pip install --upgrade pip
-                  python3 -m pip install setuptools wheel twine
+                  python3 -m pip install pooch setuptools wheel twine
+                  (echo "import pooch" ; \
+                   echo "url = 'https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx'"; \
+                   echo "md5 = '60024c5c889badc19c04ad937298a77b'"; \
+                   echo "fname = url.rsplit('/', 1)[1]"; \
+                   echo "pooch.retrieve(url, f'md5:{md5}', fname=fname, path='./rembg')") \
+                  | python
+                  chmod 777 ./rembg/*.onnx
 
             - name: "Builds and uploads to PyPI"
               run: |
