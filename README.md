@@ -40,7 +40,8 @@
   <img src="https://raw.githubusercontent.com/rnag/rembg-aws-lambda/master/examples/girl-3.out.png" width="100" />
 </p>
 
-[//]: # (**If this project has helped you, please consider making a [donation]&#40;https://www.buymeacoffee.com/danielgatis&#41;.**)
+**Check out my similar project, [`profile-photo`](https://github.com/rnag/profile-photo),
+which can create a [headshot](https://www.nfi.edu/headshot-photo/) from an image.**
 
 ## Requirements
 
