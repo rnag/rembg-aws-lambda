@@ -23,7 +23,6 @@ jobs:
             - name: Install package
               run: |
                   python -m pip install --upgrade pip
-                  pip install .
                   pip install -r requirements-dev.txt
                   pip install pytest
                   (echo "import pooch" ; \
@@ -33,6 +32,7 @@ jobs:
                    echo "pooch.retrieve(url, f'md5:{md5}', fname=fname, path='./rembg', progressbar=True)") \
                   | python
                   chmod 777 ./rembg/*.onnx
+                  pip install .
             - name: Test installation with pytest
               run: |
                   pytest
