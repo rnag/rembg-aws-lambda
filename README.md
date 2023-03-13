@@ -178,16 +178,16 @@ https://github.com/danielgatis/rembg/issues/193#issuecomment-1055534289
 - https://github.com/NathanUA/U-2-Net
 - https://github.com/pymatting/pymatting
 
-[//]: # (## Buy me a coffee)
+## Buy me a coffee
 
-[//]: # ()
-[//]: # (Liked some of my work? Buy me a coffee &#40;or more likely a beer&#41;)
+Liked some of my work? Buy me a coffee (or more likely a beer)
 
-[//]: # ()
-[//]: # (<a href="https://www.buymeacoffee.com/danielgatis" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;"></a>)
+<a href="https://www.buymeacoffee.com/ritviknag" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;"></a>
 
 ## License
 
-Copyright (c) 2020-present [Daniel Gatis](https://github.com/danielgatis)
+Copyright:
+  * (c) 2020-present  [Daniel Gatis](https://github.com/danielgatis)
+  * (c) 2023-present  [Ritvik Nag](https://github.com/rnag)
 
 Licensed under [MIT License](./LICENSE.txt)
