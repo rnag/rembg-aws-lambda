@@ -15,17 +15,18 @@ jobs:
                 echo $?
                 echo 'Done!'
             - name: Get Previous Tag
+              id: prev_tag
               if: failure()
               run: |
                   PREV_TAG=$(<rembg-commit-ref)
-                  echo "::set-env name=baseRef::$PREV_TAG"
+                  echo "::set-output name=baseRef::$PREV_TAG"
             - name: Generate Changelog
               id: generate_changelog
               uses: nblagoev/pull-release-notes-action@v1.0.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  base-ref: ${{ env.baseRef }}
+                  base-ref: ${{ steps.prev_tag.outputs.baseRef }}
                   head-ref: ${{ github.ref }}
                   repository: danielgatis/rembg
             - run: |
