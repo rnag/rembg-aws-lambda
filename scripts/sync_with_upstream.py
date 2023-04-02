@@ -4,6 +4,8 @@ Python Automation Script, designed to sync changes from:
 to
     our "non-official" fork (https://github.com/rnag/rembg-aws-lambda)
 
+Returns 0 (SUCCESS) if changes are detected, else returns 1.
+
 ---
 
 **NOTE**: Pass ``-d | --debug`` to the script, to see the full output.
@@ -79,10 +81,10 @@ def main():
 
     if git_has_folder_changed('rembg'):
         LOG.debug('Changes Detected in rembg/ folder')
-        exit(1)
+        exit(0)
     else:
         LOG.debug('No Changes Detected')
-        exit(0)
+        exit(1)
 
 
 def get_parsed_args():
