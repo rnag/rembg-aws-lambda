@@ -17,7 +17,9 @@ jobs:
               id: prev_tag
               run: |
                   PREV_TAG=$(<rembg-commit-ref)
+                  CURR_TAG=$(<rembg-upstream/.git/refs/heads/main)
                   echo "::set-output name=baseRef::$PREV_TAG"
+                  echo "::set-output name=headRef::$CURR_TAG"
             - name: Generate Changelog
               id: generate_changelog
               uses: nblagoev/pull-release-notes-action@v1.0.2
@@ -25,7 +27,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   base-ref: ${{ steps.prev_tag.outputs.baseRef }}
-                  head-ref: ${{ github.ref }}
+                  head-ref: ${{ steps.prev_tag.outputs.headRef }}
                   repository: danielgatis/rembg
             - run: |
                   echo ${{steps.generate_changelog.outputs.result}}
