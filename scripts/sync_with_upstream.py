@@ -165,6 +165,12 @@ def merge_main_module(file='bg.py'):
                     lines.append(f'{" " * comment_lvl}# {" " * remaining_indent}{stripped}')
                 continue
 
+            # this is annoying, but we need to account for `isort` here
+            # basically, skip adding newline immediately following a set of commented imports
+            if not stripped and seen_commented_import:
+                seen_commented_import = False
+                continue
+
             lines.append(line)
 
     # add a trailing newline
