@@ -3,7 +3,7 @@ name: Sync With Upstream
 on: [push]
 
 jobs:
-    lint_python:
+    sync_with_upstream:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
