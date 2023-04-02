@@ -1,6 +1,8 @@
 name: Sync With Upstream
 
-on: [push]
+on:
+    schedule:
+        - cron: "30 1 * * *"
 
 jobs:
     sync_with_upstream:
@@ -16,12 +18,19 @@ jobs:
             - name: Set Outputs
               id: so
               run: |
-                  PREV_TAG=$(<rembg-commit-ref)
-                  CURR_TAG=$(<rembg-upstream/.git/refs/heads/main)
-                  echo "$CURR_TAG" > rembg-commit-ref
+                  PREV_REF=$(<rembg-commit-ref)
+                  cd rembg-upstream
+                  CURR_REF=$(<.git/refs/heads/main)
+                  git fetch --tags
+                  PREV_TAG=$(git describe --tags --abbrev=0 $(<../rembg-commit-ref))
+                  CURR_TAG=(git describe --tags --abbrev=0)
+                  cd ..
+                  echo "$CURR_REF" > rembg-commit-ref
                   echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-                  echo "baseRef=$PREV_TAG" >> $GITHUB_OUTPUT
-                  echo "headRef=$CURR_TAG" >> $GITHUB_OUTPUT
+                  echo "baseRef=$PREV_REF" >> $GITHUB_OUTPUT
+                  echo "headRef=$CURR_REF" >> $GITHUB_OUTPUT
+                  echo "prevTag=$PREV_TAG" >> $GITHUB_OUTPUT
+                  echo "currTag=$CURR_TAG" >> $GITHUB_OUTPUT
             - name: Generate Changelog
               id: generate_changelog
               uses: nblagoev/pull-release-notes-action@v1.0.2
@@ -39,5 +48,10 @@ jobs:
                   branch: create-pull-request/auto-updates-${{ steps.so.outputs.date }}
                   delete-branch: true
                   title: '[${{ steps.so.outputs.date }}] Changes Detected in Upstream'
-                  body: ${{steps.generate_changelog.outputs.result}}
+                  body: |
+                      ## Changes Detected in [`danielgatis/rembg`](https://github.com/danielgatis/rembg)
+
+                      **Full Changelog**: https://github.com/danielgatis/rembg/compare/${{ steps.so.outputs.prevTag }}...${{ steps.so.outputs.currTag }}
+
+                      ${{steps.generate_changelog.outputs.result}}
                   reviewers: rnag
