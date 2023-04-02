@@ -3,6 +3,7 @@ name: Sync With Upstream
 on:
     schedule:
         - cron: "30 1 * * *"
+    workflow_dispatch:  # adding the workflow_dispatch, so it can be triggered manually
 
 jobs:
     sync_with_upstream:
