@@ -23,8 +23,7 @@ def new_session(model_name: str = "u2net") -> BaseSession:
         u2net_home = os.environ["U2NET_HOME"]
         path = Path(u2net_home).expanduser()
     else:
-        u2net_home = script_dir
-        path = Path(u2net_home)
+        path = script_dir
 
     fname = f"{model_name}.onnx"
     full_path = path / fname

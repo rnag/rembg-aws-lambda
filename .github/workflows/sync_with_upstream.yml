@@ -33,9 +33,10 @@ jobs:
                   repository: danielgatis/rembg
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v4
-              commit-message: [create-pull-request] Changes Detected in Upstream
-              branch: create-pull-request/auto-updates-${{ steps.so.outputs.date }}
-              delete-branch: true
-              title: [${{ steps.so.outputs.date }}] Changes Detected in Upstream
-              body: ${{steps.generate_changelog.outputs.result}}
-              reviewers: rnag
+              with:
+                  commit-message: [create-pull-request] Changes Detected in Upstream
+                  branch: create-pull-request/auto-updates-${{ steps.so.outputs.date }}
+                  delete-branch: true
+                  title: [${{ steps.so.outputs.date }}] Changes Detected in Upstream
+                  body: ${{steps.generate_changelog.outputs.result}}
+                  reviewers: rnag
