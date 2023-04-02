@@ -32,11 +32,12 @@ jobs:
                   head-ref: ${{ steps.so.outputs.headRef }}
                   repository: danielgatis/rembg
             - name: Create Pull Request
+              id: cpr
               uses: peter-evans/create-pull-request@v4
               with:
-                  commit-message: [create-pull-request] Changes Detected in Upstream
+                  commit-message: '[${{ steps.so.outputs.date }}] Changes Detected in Upstream'
                   branch: create-pull-request/auto-updates-${{ steps.so.outputs.date }}
                   delete-branch: true
-                  title: [${{ steps.so.outputs.date }}] Changes Detected in Upstream
+                  title: '[${{ steps.so.outputs.date }}] Changes Detected in Upstream'
                   body: ${{steps.generate_changelog.outputs.result}}
                   reviewers: rnag
