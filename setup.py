@@ -11,6 +11,17 @@ here = pathlib.Path(__file__).parent.resolve()
 
 long_description = (here / "README.md").read_text(encoding="utf-8")
 
+requires = [
+    "numpy~=1.23.5",
+    "onnxruntime~=1.13.1",
+    "opencv-python-headless~=4.6.0.66",
+    "pillow~=9.3.0",
+]
+
+extras_require = {
+    "gpu": ["onnxruntime-gpu~=1.13.1"],
+}
+
 setup(
     name="rembg-aws-lambda",
     description="Remove image background",
@@ -38,15 +49,8 @@ setup(
     package_data={'': ['*.onnx']},
     include_package_data=True,
     python_requires=">3.7, <3.11",
-    install_requires=[
-        "numpy~=1.23.5",
-        "onnxruntime~=1.13.1",
-        "opencv-python-headless~=4.6.0.66",
-        "pillow~=9.3.0",
-    ],
-    extras_require={
-        "gpu": ["onnxruntime-gpu~=1.13.1"],
-    },
+    install_requires=requires,
+    extras_require=extras_require,
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
 )
