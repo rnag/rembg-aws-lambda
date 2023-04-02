@@ -12,8 +12,6 @@ jobs:
                   python-version: '3.10'
             - run: |
                 python scripts/sync_with_upstream.py -d
-                echo $?
-                echo 'Done!'
             - name: Get Previous Tag
               id: prev_tag
               if: failure()
@@ -22,6 +20,7 @@ jobs:
                   echo "::set-output name=baseRef::$PREV_TAG"
             - name: Generate Changelog
               id: generate_changelog
+              if: success()
               uses: nblagoev/pull-release-notes-action@v1.0.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,7 +28,8 @@ jobs:
                   base-ref: ${{ steps.prev_tag.outputs.baseRef }}
                   head-ref: ${{ github.ref }}
                   repository: danielgatis/rembg
-            - run: |
+            - if: success()
+              run: |
                   echo ${{steps.generate_changelog.outputs.result}}
 
 #            - name: Create Release
