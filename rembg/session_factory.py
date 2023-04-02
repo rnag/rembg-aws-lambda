@@ -5,9 +5,9 @@ from typing import Type
 import onnxruntime as ort
 
 from .session_base import BaseSession
-
-# from .session_cloth import ClothSession
 from .session_simple import SimpleSession
+
+script_dir = Path(__file__).parent
 
 
 def new_session(model_name: str = "u2net") -> BaseSession:
@@ -19,10 +19,13 @@ def new_session(model_name: str = "u2net") -> BaseSession:
     if model_name != "u2net":
         raise NotImplementedError
 
-    u2net_home = os.getenv("U2NET_HOME") or Path(__file__).parent
+    if "U2NET_HOME" in os.environ:
+        u2net_home = os.environ["U2NET_HOME"]
+        path = Path(u2net_home).expanduser()
+    else:
+        path = script_dir
 
     fname = f"{model_name}.onnx"
-    path = Path(u2net_home).expanduser()
     full_path = path / fname
 
     sess_opts = ort.SessionOptions()
