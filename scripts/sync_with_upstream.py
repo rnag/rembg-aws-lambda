@@ -4,24 +4,45 @@ Python Automation Script, designed to sync changes from:
 to
     our "non-official" fork (https://github.com/rnag/rembg-aws-lambda)
 
+---
+
+**NOTE**: Pass ``-d | --debug`` to the script, to see the full output.
+
+---
+
 """
 from __future__ import annotations
 
-import shlex
+import os.path
 import shutil
+from argparse import ArgumentParser
+from logging import getLogger, DEBUG, basicConfig, INFO
 
-from os import chdir, listdir, rmdir, unlink, pardir
+from os import chdir, listdir, rmdir, unlink, pardir, getcwd, curdir
 from os.path import isfile, islink
 from pathlib import Path
+from shlex import split
 from string import ascii_letters
-from subprocess import check_output, STDOUT
+from subprocess import check_output, STDOUT, CalledProcessError
 
 
-upstream_dir = Path('rembg-upstream')
+LOG = getLogger()
+basicConfig(level=DEBUG, format='[%(levelname)s] %(message)s')
+
 module = Path('rembg')
+root_dir = Path(__file__).parent.parent
+upstream_dir = Path('rembg-upstream')
 
 
 def main():
+    args = get_parsed_args()
+    LOG.setLevel(DEBUG if args.debug else INFO)
+
+    path_to_root = os.path.relpath(root_dir)
+
+    if path_to_root != curdir:
+        chdir_with_info(root_dir)
+
     shutil.rmtree(upstream_dir, ignore_errors=True)
 
     # Credits: https://stackoverflow.com/a/54910376/10237506
@@ -32,14 +53,16 @@ def main():
         --sparse
         https://github.com/danielgatis/rembg
         {upstream_dir}
-    """, capture_stderr=True)
+    """)
 
     chdir_with_info(upstream_dir)
 
     delete_all_files_in_cwd()
 
     run_cmd(f"""
-    git sparse-checkout set
+    git
+        sparse-checkout
+        set
         {module}
     """)
 
@@ -52,7 +75,28 @@ def main():
     for file in files_to_copy:
         copy_file(upstream_dir / file, module / file)
 
-    file = 'bg.py'
+    merge_main_module()
+
+    if git_has_folder_changed('rembg'):
+        LOG.debug('Changes Detected in rembg/ folder')
+        exit(1)
+    else:
+        LOG.debug('No Changes Detected')
+        exit(0)
+
+
+def get_parsed_args():
+    parser = ArgumentParser()
+    parser.add_argument('-d', '--debug', action='store_true')
+
+    return parser.parse_args()
+
+
+def merge_main_module(file='bg.py'):
+    src = upstream_dir / file
+    dst = module / file
+
+    LOG.debug(f'$ merge {src} {dst}')
 
     prefixes_to_comment = [
         'from pymatting',
@@ -69,9 +113,6 @@ def main():
     prev_leading_spaces = 0
     comment_lvl = None
 
-    src = upstream_dir / file
-    dst = module / file
-
     with open(src) as f:
         for line in f:
             comment_line = False
@@ -82,7 +123,9 @@ def main():
             indent = leading_spaces * ' '
 
             if in_remove_phase:
-                if leading_spaces == prev_leading_spaces and stripped and stripped[0] in ascii_letters:
+                if (leading_spaces == prev_leading_spaces
+                        and stripped
+                        and stripped[0] in ascii_letters):
                     in_remove_phase = False
                     comment_lvl = None
                 else:
@@ -116,21 +159,20 @@ def main():
 
             lines.append(line)
 
+    # add a trailing newline
     lines.append('')
 
     with open(dst, 'w') as f:
         f.write('\n'.join(lines))
 
-    print(f'$ merge {src} {dst}')
-
 
 def copy_file(src: Path[str] | str, dst: Path[str] | str):
-    print(f'$ cp {src} {dst}')
+    LOG.debug(f'$ cp {src} {dst}')
     shutil.copyfile(src, dst)
 
 
 def chdir_with_info(to: Path | str):
-    print(f'$ cd {to}')
+    LOG.debug(f'$ cd {to}')
     chdir(to)
 
 
@@ -151,16 +193,32 @@ def delete_all_files_in_cwd():
             if isfile(filename) or islink(filename):
                 unlink(filename)
         except Exception as e:
-            print(f'Failed to delete {filename}. Reason: {e}')
+            LOG.error(f'Failed to delete {filename}. Reason: {e}')
 
 
-def run_cmd(cmd: str, capture_stderr=False):
+def run_cmd(cmd: str, capture_stderr=True) -> str:
     stderr = STDOUT if capture_stderr else None
 
-    cmd_list = shlex.split(cmd.strip())
-    print(f'$ {" ".join(cmd_list)}')
+    cmd_list = split(cmd.strip())
+    LOG.debug(f'$ {" ".join(cmd_list)}')
 
-    return check_output(cmd_list, stderr=stderr)
+    return check_output(cmd_list, stderr=stderr).decode().strip()
+
+
+def git_has_folder_changed(folder: str):
+    """Use `git` to check if a folder has changes."""
+    try:
+        run_cmd(f"""
+        git diff
+            --quiet
+            HEAD
+            --
+            {folder}
+        """)
+        return False
+
+    except CalledProcessError:
+        return True
 
 
 if __name__ == '__main__':
