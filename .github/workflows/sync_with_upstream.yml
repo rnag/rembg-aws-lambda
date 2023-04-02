@@ -26,7 +26,7 @@ jobs:
                   CURR_REF=$(<.git/refs/heads/main)
                   git fetch --tags
                   PREV_TAG=$(git describe --tags --abbrev=0 $(<../rembg-commit-ref))
-                  CURR_TAG=(git describe --tags --abbrev=0)
+                  CURR_TAG=$(git describe --tags --abbrev=0)
                   cd ..
                   echo "$CURR_REF" > rembg-commit-ref
                   echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
