@@ -13,31 +13,29 @@ jobs:
             - id: sync
               run: |
                   python scripts/sync_with_upstream.py -d
-            - name: Get Previous Tag
-              id: prev_tag
+            - name: Set Outputs
+              id: so
               run: |
                   PREV_TAG=$(<rembg-commit-ref)
                   CURR_TAG=$(<rembg-upstream/.git/refs/heads/main)
-                  echo "::set-output name=baseRef::$PREV_TAG"
-                  echo "::set-output name=headRef::$CURR_TAG"
+                  echo "$CURR_TAG" > rembg-commit-ref
+                  echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+                  echo "baseRef=$PREV_TAG" >> $GITHUB_OUTPUT
+                  echo "headRef=$CURR_TAG" >> $GITHUB_OUTPUT
             - name: Generate Changelog
               id: generate_changelog
               uses: nblagoev/pull-release-notes-action@v1.0.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  base-ref: ${{ steps.prev_tag.outputs.baseRef }}
-                  head-ref: ${{ steps.prev_tag.outputs.headRef }}
+                  base-ref: ${{ steps.so.outputs.baseRef }}
+                  head-ref: ${{ steps.so.outputs.headRef }}
                   repository: danielgatis/rembg
-            - run: |
-                  echo ${{steps.generate_changelog.outputs.result}}
-
-#            - name: Create Release
-#              uses: actions/create-release@v1
-#              env:
-#                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#              with:
-#                  tag_name: ${{ github.ref }}
-#                  release_name: Release ${{ github.ref }}
-#                  body: ${{steps.generate_changelog.outputs.result}}
-#                  draft: true
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v4
+              commit-message: [create-pull-request] Changes Detected in Upstream
+              branch: create-pull-request/auto-updates-${{ steps.so.outputs.date }}
+              delete-branch: true
+              title: [${{ steps.so.outputs.date }}] Changes Detected in Upstream
+              body: ${{steps.generate_changelog.outputs.result}}
+              reviewers: rnag
