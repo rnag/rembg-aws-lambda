@@ -113,6 +113,7 @@ def merge_main_module(file='bg.py'):
     lines = []
     in_remove_phase = False
     prev_leading_spaces = 0
+    seen_commented_import = False
     comment_lvl = None
 
     with open(src) as f:
@@ -134,6 +135,11 @@ def merge_main_module(file='bg.py'):
                     comment_line = True
 
             elif any(stripped.startswith(prefix) for prefix in prefixes_to_comment):
+                if not seen_commented_import and stripped.startswith('from '):
+                    seen_commented_import = True
+                    # add newline before commented import, so `black` doesn't complain >.>
+                    lines.append('')
+
                 comment_line = True
 
             elif any(stripped.startswith(f'def {func}(') for func in functions_to_comment):
