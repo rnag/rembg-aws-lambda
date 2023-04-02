@@ -21,7 +21,7 @@ jobs:
                   echo "::set-env name=baseRef::$PREV_TAG"
             - name: Generate Changelog
               id: generate_changelog
-              uses: nblagoev/pull-release-notes-action@v1
+              uses: nblagoev/pull-release-notes-action@v1.0.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
