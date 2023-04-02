@@ -14,3 +14,29 @@ jobs:
                 python scripts/sync_with_upstream.py -d
                 echo $?
                 echo 'Done!'
+            - name: Get Previous Tag
+              if: failure()
+              run: |
+                  PREV_TAG=$(<rembg-commit-ref)
+                  echo "::set-env name=baseRef::$PREV_TAG"
+            - name: Generate Changelog
+              id: generate_changelog
+              uses: nblagoev/pull-release-notes-action@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  base-ref: ${{ env.baseRef }}
+                  head-ref: ${{ github.ref }}
+                  repository: danielgatis/rembg
+            - run: |
+                  echo ${{steps.generate_changelog.outputs.result}}
+
+#            - name: Create Release
+#              uses: actions/create-release@v1
+#              env:
+#                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#              with:
+#                  tag_name: ${{ github.ref }}
+#                  release_name: Release ${{ github.ref }}
+#                  body: ${{steps.generate_changelog.outputs.result}}
+#                  draft: true
