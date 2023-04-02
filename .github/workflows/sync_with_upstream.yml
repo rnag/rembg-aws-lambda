@@ -8,14 +8,14 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-python@v4
-              id: sync
               with:
                   python-version: '3.10'
-            - run: |
-                python scripts/sync_with_upstream.py -d
+            - id: sync
+              run: |
+                  python scripts/sync_with_upstream.py -d
             - name: Get Previous Tag
               id: prev_tag
-              if: failure() && steps.sync.outcome != 'success'
+              if: steps.sync.outcome != 'success'
               run: |
                   PREV_TAG=$(<rembg-commit-ref)
                   echo "::set-output name=baseRef::$PREV_TAG"
