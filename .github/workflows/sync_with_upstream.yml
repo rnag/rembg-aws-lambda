@@ -15,7 +15,7 @@ jobs:
                 python scripts/sync_with_upstream.py -d
             - name: Get Previous Tag
               id: prev_tag
-              if: steps.sync.outcome != 'success'
+              if: failure() && steps.sync.outcome != 'success'
               run: |
                   PREV_TAG=$(<rembg-commit-ref)
                   echo "::set-output name=baseRef::$PREV_TAG"
