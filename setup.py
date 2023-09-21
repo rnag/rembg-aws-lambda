@@ -16,6 +16,7 @@ requires = [
     "onnxruntime~=1.13.1",
     "opencv-python-headless~=4.6.0.66",
     "pillow~=9.3.0",
+    "pymatting",
 ]
 
 extras_require = {
