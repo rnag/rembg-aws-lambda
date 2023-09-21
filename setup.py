@@ -54,4 +54,5 @@ setup(
     extras_require=extras_require,
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    zip_safe=False
 )
